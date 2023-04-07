@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SkyTickets.Business.GraphService;
+using SkyTickets.Domain.Configuration;
+using SkyTickets.Business.FlightStatsSevice;
 
 namespace SkyTickets.Initializer
 {
@@ -47,9 +49,10 @@ namespace SkyTickets.Initializer
             var services = new ServiceCollection();
 
             var settings = configuration.GetSection(typeof(Neo4jSettings).Name).Get<Neo4jSettings>();
-            
+            var settings1 = configuration.GetSection(typeof(FlightStatsApiSettings).Name).Get<FlightStatsApiSettings>();
             services
-                .AddSingleton<Neo4jSettings>(settings);
+                .AddSingleton<INeo4jSettings>(settings)
+                .AddSingleton<IFlightStatsApiSettings>(settings1);
 
             services
                 .AddSingleton(typeof(IDriver), Neo4jContext.Connect(settings));
@@ -61,10 +64,14 @@ namespace SkyTickets.Initializer
                 .AddSingleton<IGraphRepository, Neo4jRepository>();
 
             services
-                .AddSingleton<IGraphService, GraphService>();
+                .AddSingleton<IGraphService, GraphService>()
+                .AddSingleton<IFlightStatsService, FlightStatsService>();
 
             services
                 .AddSingleton<InitializeGraph>();
+
+            services
+                .AddHttpClient();
 
             return services.BuildServiceProvider();
         }

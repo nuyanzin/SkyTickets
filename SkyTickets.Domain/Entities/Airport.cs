@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SkyTickets.Domain.Entities
 {
-    public class Airport
+    public class Airport : Entity
     {
         public int AirportId { get; set; }
         public string? Name { get; set; }

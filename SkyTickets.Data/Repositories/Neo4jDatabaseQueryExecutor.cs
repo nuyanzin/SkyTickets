@@ -22,11 +22,10 @@ namespace SkyTickets.Data.Repositories
             try
             {
                 await using var session = _driver.AsyncSession(configBuilder => configBuilder.WithDatabase("neo4j"));
-                await session.ExecuteWriteAsync(async tx =>
+                return (IResultCursor)await session.ExecuteWriteAsync(async tx =>
                 {
                     return await tx.RunAsync(query);
                 });
-                throw new Exception();
             }
             catch (Exception ex)
             {

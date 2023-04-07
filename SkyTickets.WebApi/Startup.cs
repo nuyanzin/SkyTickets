@@ -4,6 +4,9 @@ using Neo4j.Driver;
 using SkyTickets.Data.Repositories;
 using SkyTickets.Domain.Repositories;
 using SkyTickets.Business.GraphService;
+using SkyTickets.Domain.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using SkyTickets.Business.FlightStatsSevice;
 
 namespace SkyTickets.WebApi
 {
@@ -25,8 +28,10 @@ namespace SkyTickets.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             var settings = Configuration.GetSection(typeof(Neo4jSettings).Name).Get<Neo4jSettings>();
+            var settings1 = Configuration.GetSection(typeof(FlightStatsApiSettings).Name).Get<FlightStatsApiSettings>();
             services
-                .AddSingleton<Neo4jSettings>(settings);
+                .AddSingleton<INeo4jSettings>(settings)
+                .AddSingleton<IFlightStatsApiSettings>(settings1);
 
             services
                 .AddSingleton(typeof(IDriver), Neo4jContext.Connect(settings));
@@ -38,7 +43,11 @@ namespace SkyTickets.WebApi
                 .AddSingleton<IGraphRepository, Neo4jRepository>();
 
             services
-                .AddSingleton<IGraphService, GraphService>();
+                .AddSingleton<IGraphService, GraphService>()
+                .AddSingleton<IFlightStatsService, FlightStatsService>();
+
+            services
+                .AddHttpClient();
 
             services
                 .AddControllers();
