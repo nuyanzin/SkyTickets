@@ -16,6 +16,7 @@ namespace SkyTickets.Domain.Repositories
         Task<TEntity> GetAsync(Guid id);
         Task<List<TEntity>> GetAsync(params Guid[] ids);
         Task CreateAsync(TEntity entity);
+        Task CreateBatchAsync(params TEntity[] entities);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(Guid id);
     }

@@ -34,6 +34,17 @@ namespace SkyTickets.Data.Repositories
             return Collection.InsertOneAsync(entity);
         }
 
+        public Task CreateBatchAsync(params TEntity[] entities)
+        {
+            var list = entities.ToList();
+            if (list.Count == 0)
+            {
+                return Task.FromResult(false);
+            }
+
+            return Collection.InsertManyAsync(list);
+        }
+
         public Task UpdateAsync(TEntity entity)
         {
             return Collection.FindOneAndReplaceAsync(x => x.Id == entity.Id, entity);

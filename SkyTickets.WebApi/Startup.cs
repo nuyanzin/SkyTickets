@@ -7,6 +7,10 @@ using SkyTickets.Business.GraphService;
 using SkyTickets.Domain.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkyTickets.Business.FlightStatsSevice;
+using SkyTickets.Business.AirportsService;
+using MongoDB.Driver;
+using SkyTickets.Data;
+using SkyTickets.Mapping.Airports;
 
 namespace SkyTickets.WebApi
 {
@@ -28,23 +32,31 @@ namespace SkyTickets.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             var settings = Configuration.GetSection(typeof(Neo4jSettings).Name).Get<Neo4jSettings>();
+            var mongoDbSettings = Configuration.GetSection(typeof(DatabaseSettings).Name).Get<DatabaseSettings>();
             var settings1 = Configuration.GetSection(typeof(FlightStatsApiSettings).Name).Get<FlightStatsApiSettings>();
             services
                 .AddSingleton<INeo4jSettings>(settings)
+                .AddSingleton<IDatabaseSettings>(mongoDbSettings)
                 .AddSingleton<IFlightStatsApiSettings>(settings1);
 
             services
-                .AddSingleton(typeof(IDriver), Neo4jContext.Connect(settings));
+                .AddSingleton(typeof(IDriver), Neo4jContext.Connect(settings))
+                .AddSingleton(typeof(IMongoDatabase), MongoDbConnector.Connect(mongoDbSettings.MongoDbConnectionString));
 
             services
                 .AddSingleton<IDatabaseQueryExecutor, Neo4jDatabaseQueryExecutor>();
 
             services
-                .AddSingleton<IGraphRepository, Neo4jRepository>();
+                .AddSingleton<IGraphRepository, Neo4jRepository>()
+                .AddSingleton<IAirportsRepository, AirportsRepository>();
 
             services
                 .AddSingleton<IGraphService, GraphService>()
-                .AddSingleton<IFlightStatsService, FlightStatsService>();
+                .AddSingleton<IFlightStatsService, FlightStatsService>()
+                .AddSingleton<IAirportsService, AirportsService>();
+
+            services
+                .AddSingleton<AirportModelMapper>();
 
             services
                 .AddHttpClient();

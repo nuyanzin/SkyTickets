@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using SkyTickets.Business.GraphService;
 using SkyTickets.Domain.Configuration;
 using SkyTickets.Business.FlightStatsSevice;
+using SkyTickets.Business.AirportsService;
+using SkyTickets.Data;
+using MongoDB.Driver;
 
 namespace SkyTickets.Initializer
 {
@@ -49,26 +52,31 @@ namespace SkyTickets.Initializer
             var services = new ServiceCollection();
 
             var settings = configuration.GetSection(typeof(Neo4jSettings).Name).Get<Neo4jSettings>();
+            var mongoDbSettings = configuration.GetSection(typeof(DatabaseSettings).Name).Get<DatabaseSettings>();
             var settings1 = configuration.GetSection(typeof(FlightStatsApiSettings).Name).Get<FlightStatsApiSettings>();
             services
                 .AddSingleton<INeo4jSettings>(settings)
+                .AddSingleton<IDatabaseSettings>(mongoDbSettings)
                 .AddSingleton<IFlightStatsApiSettings>(settings1);
 
             services
-                .AddSingleton(typeof(IDriver), Neo4jContext.Connect(settings));
+                .AddSingleton(typeof(IDriver), Neo4jContext.Connect(settings))
+                .AddSingleton(typeof(IMongoDatabase), MongoDbConnector.Connect(mongoDbSettings.MongoDbConnectionString));
 
             services
                 .AddSingleton<IDatabaseQueryExecutor, Neo4jDatabaseQueryExecutor>();
 
             services
-                .AddSingleton<IGraphRepository, Neo4jRepository>();
+                .AddSingleton<IGraphRepository, Neo4jRepository>()
+                .AddSingleton<IAirportsRepository, AirportsRepository>();
 
             services
                 .AddSingleton<IGraphService, GraphService>()
+                .AddSingleton<IAirportsService, AirportsService>()
                 .AddSingleton<IFlightStatsService, FlightStatsService>();
 
             services
-                .AddSingleton<InitializeGraph>();
+                .AddSingleton<InitializeDatabases>();
 
             services
                 .AddHttpClient();

@@ -23,6 +23,11 @@ namespace SkyTickets.Domain.Entities
         public string? Type { get; set; }
         public string? Source { get; set; }
 
+        public Airport(string propertiesInCsvFormat)
+        {
+            InitializePropertiesFromString(propertiesInCsvFormat);
+        }
+
         public void InitializePropertiesFromString(string dataRow)
         {
             var fields = dataRow.Split(',');
@@ -31,29 +36,25 @@ namespace SkyTickets.Domain.Entities
                 AirportId = id;
             }
             Name = ParseStringDataFromField(fields[1]);
-            Country = ParseStringDataFromField(fields[2]);
-            IATA = ParseStringDataFromField(fields[3]);
-            ICAO = ParseStringDataFromField(fields[4]);
-            Latitude = ParseDoubleDataFromField(fields[5]);
-            Longitude = ParseDoubleDataFromField(fields[6]);
-            Altitude = ParseDoubleDataFromField(fields[7]);
-            TimezoneInHours = ParseIntDataFromField(fields[8]);
-            DST = ParseStringDataFromField(fields[9]);
-            Timezone = ParseStringDataFromField(fields[10]);
-            Type = ParseStringDataFromField(fields[11]);
-            Source = ParseStringDataFromField(fields[12]);
+            City = ParseStringDataFromField(fields[2]);
+            Country = ParseStringDataFromField(fields[3]);
+            IATA = ParseStringDataFromField(fields[4]);
+            ICAO = ParseStringDataFromField(fields[5]);
+            Latitude = ParseDoubleDataFromField(fields[6]);
+            Longitude = ParseDoubleDataFromField(fields[7]);
+            Altitude = ParseDoubleDataFromField(fields[8]);
+            TimezoneInHours = ParseIntDataFromField(fields[9]);
+            DST = ParseStringDataFromField(fields[10]);
+            Timezone = ParseStringDataFromField(fields[11]);
+            Type = ParseStringDataFromField(fields[12]);
+            Source = ParseStringDataFromField(fields[13]);
         }
 
         private string? ParseStringDataFromField(string field)
         {
-            var data = field.Split("\"")[1];
-            if (!string.IsNullOrEmpty(data))
+            if (!string.IsNullOrEmpty(field))
             {
-                if (data != "Null")
-                {
-                    return data;
-                }
-                return null;
+                return field;
             }
             return null;
         }

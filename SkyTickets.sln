@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyTickets.WebApi", "SkyTickets.WebApi\SkyTickets.WebApi.csproj", "{341FD180-B294-429F-87DE-0BA3914B6CD7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyTickets.RouteSearchEngine", "SkyTickets.RouteSearchEngine\SkyTickets.RouteSearchEngine.csproj", "{9406B072-1F07-4FC8-A0FE-F61C94A2ABB4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyTickets.Business", "SkyTickets.Business\SkyTickets.Business.csproj", "{ABEF3A81-92ED-4583-8C1C-772058BFE67D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkyTickets.Data", "SkyTickets.Data\SkyTickets.Data.csproj", "{AA3F5E7A-2DC8-4D3D-B3AE-45238AD34387}"
@@ -29,10 +27,6 @@ Global
 		{341FD180-B294-429F-87DE-0BA3914B6CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{341FD180-B294-429F-87DE-0BA3914B6CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{341FD180-B294-429F-87DE-0BA3914B6CD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9406B072-1F07-4FC8-A0FE-F61C94A2ABB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9406B072-1F07-4FC8-A0FE-F61C94A2ABB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9406B072-1F07-4FC8-A0FE-F61C94A2ABB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9406B072-1F07-4FC8-A0FE-F61C94A2ABB4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ABEF3A81-92ED-4583-8C1C-772058BFE67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABEF3A81-92ED-4583-8C1C-772058BFE67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABEF3A81-92ED-4583-8C1C-772058BFE67D}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SkyTickets.Domain\SkyTickets.Domain.csproj" />
+    <ProjectReference Include="..\SkyTickets.Model\SkyTickets.Model.csproj" />
+  </ItemGroup>
+
 </Project>

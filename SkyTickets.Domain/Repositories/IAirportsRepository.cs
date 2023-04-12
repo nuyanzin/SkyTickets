@@ -9,6 +9,6 @@ namespace SkyTickets.Domain.Repositories
 {
     public interface IAirportsRepository : IRepository<Airport>
     {
-        Task<List<Airport>> GetBySearchTermAsync(string? searchTerm = null);
+        Task<List<Airport>> GetBySearchTermAsync(string? searchTerm = null, int? limit = null);
     }
 }
