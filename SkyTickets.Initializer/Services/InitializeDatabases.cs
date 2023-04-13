@@ -31,7 +31,8 @@ namespace SkyTickets.Initializer.Services
         public async Task Run()
         {
             //await InitializeNeo4j();
-            await InitializeMongoDb();
+            //await InitializeMongoDb();
+            await _graphRepository.GetPathsBetweenAirports();
         }
 
         private async Task InitializeMongoDb()
@@ -91,7 +92,7 @@ namespace SkyTickets.Initializer.Services
 
             var queryForLoadFlights =
                 "LOAD CSV WITH HEADERS " +
-                "FROM 'https://github.com/nuyanzin/SkyTickets/blob/master/SkyTickets.Initializer/Resources/flights.csv' " +
+                "FROM 'https://raw.githubusercontent.com/nuyanzin/SkyTickets/master/SkyTickets.Initializer/Resources/flights.csv' " +
                 "AS line " +
                 "WITH line " +
                 "LIMIT 750 " +

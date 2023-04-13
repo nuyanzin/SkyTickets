@@ -1,4 +1,5 @@
 ﻿using Neo4j.Driver;
+using SkyTickets.Domain.Entities;
 using SkyTickets.Domain.Repositories;
 using System;
 using System.Collections;
@@ -19,12 +20,32 @@ namespace SkyTickets.Data.Repositories
 
         public async Task<IResultCursor> ExecuteQueryAsync<IResultCursor>(string query)
         {
+            await using var session = _driver.AsyncSession(configBuilder => configBuilder.WithDatabase("neo4j"));
             try
             {
-                await using var session = _driver.AsyncSession(configBuilder => configBuilder.WithDatabase("neo4j"));
                 return (IResultCursor)await session.ExecuteWriteAsync(async tx =>
                 {
                     return await tx.RunAsync(query);
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public async Task ExecuteReadQueryAsync(string query)
+        {
+            
+            await using var session = _driver.AsyncSession(configBuilder => configBuilder.WithDatabase("neo4j"));
+            try
+            {
+                await session.ExecuteReadAsync(async tx =>
+                {
+                    var records = (await (await tx.RunAsync(query)).ToListAsync());
+                    var data = records.Select(record => (FlightNode)record.Values["p"]).ToList();
+                    return records;
                 });
             }
             catch (Exception ex)

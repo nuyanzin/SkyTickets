@@ -9,5 +9,7 @@ namespace SkyTickets.Domain.Repositories
     public interface IGraphRepository : IRepository
     {
         Task ExecuteQueryAsync(string query);
+
+        Task GetPathsBetweenAirports();
     }
 }

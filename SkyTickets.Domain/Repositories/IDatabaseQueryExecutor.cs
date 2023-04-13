@@ -9,5 +9,6 @@ namespace SkyTickets.Domain.Repositories
     public interface IDatabaseQueryExecutor
     {
         Task<IResultCursor> ExecuteQueryAsync<IResultCursor>(string query);
+        Task ExecuteReadQueryAsync(string query);
     }
 }
