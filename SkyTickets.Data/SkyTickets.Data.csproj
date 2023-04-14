@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
     <PackageReference Include="Neo4j.Driver" Version="5.6.0" />
+    <PackageReference Include="Neo4j.Driver.Extensions" Version="1.0.14" />
   </ItemGroup>
 
   <ItemGroup>

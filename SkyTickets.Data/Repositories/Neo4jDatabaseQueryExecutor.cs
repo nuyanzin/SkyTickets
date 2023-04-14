@@ -1,4 +1,5 @@
 ﻿using Neo4j.Driver;
+using SkyTickets.Data.Mappers;
 using SkyTickets.Domain.Entities;
 using SkyTickets.Domain.Repositories;
 using System;
@@ -44,7 +45,7 @@ namespace SkyTickets.Data.Repositories
                 await session.ExecuteReadAsync(async tx =>
                 {
                     var records = (await (await tx.RunAsync(query)).ToListAsync());
-                    var data = records.Select(record => (FlightNode)record.Values["p"]).ToList();
+                    var data = records.Select(record => FlightPathMapper.Map(record.Values["p"].As<IPath>())).ToList();
                     return records;
                 });
             }
