@@ -31,8 +31,8 @@ namespace SkyTickets.Initializer.Services
         public async Task Run()
         {
             //await InitializeNeo4j();
-            //await InitializeMongoDb();
-            await _graphRepository.GetPathsBetweenAirports();
+            await InitializeMongoDb();
+           // await _graphRepository.GetPathsBetweenAirports();
         }
 
         private async Task InitializeMongoDb()

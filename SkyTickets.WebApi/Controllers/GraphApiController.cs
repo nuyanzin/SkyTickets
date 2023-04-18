@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SkyTickets.Business.GraphService;
+using SkyTickets.Domain.Entities;
+using SkyTickets.Domain.Queries;
 
 namespace SkyTickets.WebApi.Controllers
 {
@@ -13,9 +15,10 @@ namespace SkyTickets.WebApi.Controllers
             _graphService = graphService;
         }
 
-        [HttpPost, Route("create")]
-        public async Task CreateCountries()
+        [HttpGet, Route("paths-between-airports")]
+        public Task<List<FlightPath>> GetPathsBetweenAirports([FromBody] SimplePathQuery pathQuery)
         {
+            return _graphService.GetPathsBetweenAirports(pathQuery);
         }
     }
 }

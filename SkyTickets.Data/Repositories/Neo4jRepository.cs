@@ -3,12 +3,6 @@ using SkyTickets.Data.Mappers;
 using SkyTickets.Domain.Entities;
 using SkyTickets.Domain.Queries;
 using SkyTickets.Domain.Repositories;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SkyTickets.Data.Repositories
 {
@@ -32,16 +26,13 @@ namespace SkyTickets.Data.Repositories
 
         public async Task<List<FlightPath>> GetPathsBetweenAirports(SimplePathQuery pathQuery)
         {
-            var query = "MATCH p=((src:Airport{name: 'Beijing Capital International Airport'})-[*1..4]-(dest:Airport{name: 'John F Kennedy International Airport'})) " +
-                "WHERE ALL (i in range(0, size(relationships(p))-2) WHERE (relationships(p)[i]).date < (relationships(p)[i+1]).date) " +
-                "AND (relationships(p)[0]).date > '2017-11-07 00:00:00' AND (relationships(p)[0]).date < '2017-11-08 00:00:00' " +
-                "RETURN p";
+            var query = await BuildStringQuery(pathQuery);
             var result = await _databaseQueryExecutor.ExecuteReadQueryAsync(query);
             return result.Select(record => FlightPathMapper.Map(record.Values["p"].As<IPath>())).ToList();
 
         }
 
-        private async string BuildStringQuery(SimplePathQuery pathQuery)
+        private async Task<string> BuildStringQuery(SimplePathQuery pathQuery)
         {
             if (pathQuery.Flight == null)
             {
@@ -57,10 +48,11 @@ namespace SkyTickets.Data.Repositories
             var query = 
                 $"MATCH p=((src:Airport{{{departureAirportIdentifier.Key}: '{departureAirportIdentifier.Value}'}})" +
                 $"-[*1..4]-" +
-                $"(dest:Airport{{{a}: 'John F Kennedy International Airport'}})) " +
-                "WHERE ALL (i in range(0, size(relationships(p))-2) WHERE (relationships(p)[i]).date < (relationships(p)[i+1]).date) " +
-                "AND (relationships(p)[0]).date > '2017-11-07 00:00:00' AND (relationships(p)[0]).date < '2017-11-08 00:00:00' " +
-                "RETURN p";
+                $"(dest:Airport{{{arrivalAirportIdentifier.Key}: '{arrivalAirportIdentifier.Value}'}})) " +
+                $"WHERE ALL (i in range(0, size(relationships(p))-2) WHERE (relationships(p)[i]).date < (relationships(p)[i+1]).date) " +
+                $"AND (relationships(p)[0]).date > '{pathQuery.Flight.DepartureDateTime}' AND (relationships(p)[0]).date < '{pathQuery.Flight.ArrivalDateTime}' " +
+                $"RETURN p";
+            return query;
         }
 
         

@@ -1,10 +1,6 @@
-﻿using SkyTickets.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SkyTickets.Domain.Entities;
+using SkyTickets.Domain.Queries;
+using SkyTickets.Domain.Repositories;
 
 namespace SkyTickets.Business.GraphService
 {
@@ -14,6 +10,11 @@ namespace SkyTickets.Business.GraphService
         public GraphService(IGraphRepository graphRepository)
         {
             _graphRepository = graphRepository;
+        }
+
+        public Task<List<FlightPath>> GetPathsBetweenAirports(SimplePathQuery pathQuery)
+        {
+            return _graphRepository.GetPathsBetweenAirports(pathQuery);
         }
     }
 }
