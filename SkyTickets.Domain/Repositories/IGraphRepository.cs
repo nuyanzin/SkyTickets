@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SkyTickets.Domain.Entities;
+using SkyTickets.Domain.Queries;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +12,6 @@ namespace SkyTickets.Domain.Repositories
     {
         Task ExecuteQueryAsync(string query);
 
-        Task GetPathsBetweenAirports();
+        Task<List<FlightPath>> GetPathsBetweenAirports(SimplePathQuery pathQuery);
     }
 }

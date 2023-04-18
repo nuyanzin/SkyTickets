@@ -36,17 +36,15 @@ namespace SkyTickets.Data.Repositories
             }
         }
 
-        public async Task ExecuteReadQueryAsync(string query)
+        public async Task<List<IRecord>> ExecuteReadQueryAsync(string query)
         {
             
             await using var session = _driver.AsyncSession(configBuilder => configBuilder.WithDatabase("neo4j"));
             try
             {
-                await session.ExecuteReadAsync(async tx =>
+                return await session.ExecuteReadAsync(async tx =>
                 {
-                    var records = (await (await tx.RunAsync(query)).ToListAsync());
-                    var data = records.Select(record => FlightPathMapper.Map(record.Values["p"].As<IPath>())).ToList();
-                    return records;
+                    return (await (await tx.RunAsync(query)).ToListAsync());
                 });
             }
             catch (Exception ex)

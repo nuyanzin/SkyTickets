@@ -76,5 +76,23 @@ namespace SkyTickets.Domain.Entities
             }
             return null;
         }
+
+        public KeyValuePair<string, string> GetNotNullIdentifier()
+        {
+            if (!string.IsNullOrEmpty(ICAO))
+            {
+                return new KeyValuePair<string, string>(nameof(ICAO).ToLowerInvariant(), ICAO);
+            }
+            if (!string.IsNullOrEmpty(IATA))
+            {
+                return new KeyValuePair<string, string>(nameof(IATA).ToLowerInvariant(), IATA);
+            }
+            if (!string.IsNullOrEmpty(Name))
+            {
+                return new KeyValuePair<string, string>(nameof(Name).ToLowerInvariant(), Name);
+            }
+
+            throw new Exception();
+        }
     }
 }
