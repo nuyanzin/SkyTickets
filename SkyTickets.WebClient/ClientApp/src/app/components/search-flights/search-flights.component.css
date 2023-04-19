@@ -1,0 +1,47 @@
+.custom-form {
+    display: flex;
+    flex-direction: row;
+}
+
+.custom-form
+.form-sections-list
+.form-section {
+    display: flex;
+    flex-direction: row;
+}
+
+.custom-form
+.form-sections-list
+.form-section
+.form-control-container {
+    margin: 0 10px;
+}
+
+.custom-form
+.form-sections-list
+.form-section
+.form-control-container
+.form-control {
+    height: 40px;
+    border-radius: 8px;
+}
+
+.custom-form
+.form-sections-list
+.form-section
+.form-control-container
+.form-control:hover {
+}
+
+.custom-form
+.search-button-container
+.search-button {
+    margin-top: 24px;
+    width: 120px;
+    background-color: #34b0d9;
+    height: 40px;
+    border-radius: 8px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
