@@ -1,3 +1,5 @@
 /**/bin/*
 /**/obj/*
 .vs
+SkyTickets.WebClient/ClientApp/node_modules
+SkyTickets.WebClient/ClientApp/.angular
