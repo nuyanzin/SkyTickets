@@ -4,10 +4,11 @@
             <li class="form-section">
                 <div class="form-control-container">
                     <label class="control-name">From</label>
-                    <input class="form-control" list="from" formControlName="from">
-                    <datalist id="from">
-                        <option *ngFor="let item of foundAirports">{{ item.name }}</option>
-                    </datalist>
+                    <ng-select 
+                        [items]="foundAirports"
+                        formControlName="from"
+                        bindLabel="name">
+                    </ng-select>
                 </div>
                 <div class="form-control-container">
                     <label class="control-name">To</label>

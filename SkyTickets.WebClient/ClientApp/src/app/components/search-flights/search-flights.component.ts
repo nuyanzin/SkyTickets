@@ -20,6 +20,7 @@ export class SearchFlightsComponent {
         this.initializeSearchForm();
         this.searchForm.get('from')?.valueChanges.subscribe((value: string) => {
             this.airportsService.getBySearchTerm(value).subscribe(airports => {
+                console.log(value);
                 if (airports && airports.length > 0)
                 {
                     this.foundAirports = airports;
@@ -31,7 +32,7 @@ export class SearchFlightsComponent {
 
     private initializeSearchForm() {
         this.searchForm = new FormGroup({
-            from: new FormControl('', { validators: [ Validators.required ]}),
+            from: new FormControl(null, { validators: [ Validators.required ]}),
             to: new FormControl('', { validators: [ Validators.required ]}),
             departureTime: new FormControl('', { validators: [ Validators.required ]}),
             arrivalTime: new FormControl('', { validators: [ Validators.required ]})
