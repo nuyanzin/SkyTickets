@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, map } from "rxjs";
 import { AppConfig } from "../app.config";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class HttpService {
 
     public get<T>(url: string): Observable<any> {
         url = `${this.appConfig.skyTicketsApiUrl}/${url}`
-        return this.http.get<T>(url, this.getHttpRequestOptions())
+        return this.http.get<T>(url, this.getHttpRequestOptions()).pipe(map(response => this.handleResponce(response as HttpResponse<T>)));
     }
 
     private getHttpRequestOptions(): any {
@@ -32,5 +32,9 @@ export class HttpService {
         }
 
         return headers;
+    }
+
+    private handleResponce<T>(response: HttpResponse<T>): T | null {
+        return response.body;
     }
 }

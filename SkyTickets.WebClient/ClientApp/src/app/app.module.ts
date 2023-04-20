@@ -12,6 +12,7 @@ import { AirportsService } from "./services/airports.service";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpService } from "./services/http.service";
 import { HttpClientModule } from "@angular/common/http";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   	declarations: [
@@ -27,8 +28,8 @@ import { HttpClientModule } from "@angular/common/http";
     	AppRoutingModule,
         ReactiveFormsModule,
         HttpClientModule,
-        //NgSelectModule,
-        //FormsModule
+        NgSelectModule,
+        FormsModule
   	],
   	providers: [
         AppConfig,

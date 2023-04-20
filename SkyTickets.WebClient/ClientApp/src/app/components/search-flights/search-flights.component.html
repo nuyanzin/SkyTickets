@@ -4,19 +4,22 @@
             <li class="form-section">
                 <div class="form-control-container">
                     <label class="control-name">From</label>
-                    <input class="form-control" formControlName="from">
+                    <input class="form-control" list="from" formControlName="from">
+                    <datalist id="from">
+                        <option *ngFor="let item of foundAirports">{{ item.name }}</option>
+                    </datalist>
                 </div>
                 <div class="form-control-container">
                     <label class="control-name">To</label>
-                    <input class="form-control" formControlName="to">
+                    <input class="form-control">
                 </div>
                 <div class="form-control-container">
                     <label class="control-name">Departure time</label>
-                    <input class="form-control" formControlName="departureTime">
+                    <input class="form-control">
                 </div>
                 <div class="form-control-container">
                     <label class="control-name">Arrival time</label>
-                    <input class="form-control" formControlName="arrivalTime">
+                    <input class="form-control">
                 </div>
                 <div class="search-button-container">
                     <button class="search-button">

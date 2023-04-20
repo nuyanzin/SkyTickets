@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { filter } from "rxjs";
 import { AirportModel } from "src/app/models/airports.model";
 import { AirportsService } from "src/app/services/airports.service";
 
@@ -17,13 +18,15 @@ export class SearchFlightsComponent {
         private readonly airportsService: AirportsService
     ) {
         this.initializeSearchForm();
-        this.searchForm.get('from')?.valueChanges.subscribe((value: string) =>
-            {
-                this.airportsService.getBySearchTerm(value).subscribe(airports => {
+        this.searchForm.get('from')?.valueChanges.subscribe((value: string) => {
+            this.airportsService.getBySearchTerm(value).subscribe(airports => {
+                if (airports && airports.length > 0)
+                {
                     this.foundAirports = airports;
-                    console.log(this.foundAirports);
-                })
-            });
+                    console.log(airports);
+                }
+            })
+        });
     }
 
     private initializeSearchForm() {
