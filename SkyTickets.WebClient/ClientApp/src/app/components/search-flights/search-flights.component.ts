@@ -1,4 +1,7 @@
 import { Component } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { AirportModel } from "src/app/models/airports.model";
+import { AirportsService } from "src/app/services/airports.service";
 
 @Component({
     selector: 'app-search-flights',
@@ -6,5 +9,29 @@ import { Component } from "@angular/core";
     styleUrls: ['./search-flights.component.css']
 })
 export class SearchFlightsComponent {
-    
+
+    public searchForm: FormGroup = new FormGroup('');
+    public foundAirports: AirportModel[] = [];
+
+    constructor(
+        private readonly airportsService: AirportsService
+    ) {
+        this.initializeSearchForm();
+        this.searchForm.get('from')?.valueChanges.subscribe((value: string) =>
+            {
+                this.airportsService.getBySearchTerm(value).subscribe(airports => {
+                    this.foundAirports = airports;
+                    console.log(this.foundAirports);
+                })
+            });
+    }
+
+    private initializeSearchForm() {
+        this.searchForm = new FormGroup({
+            from: new FormControl('', { validators: [ Validators.required ]}),
+            to: new FormControl('', { validators: [ Validators.required ]}),
+            departureTime: new FormControl('', { validators: [ Validators.required ]}),
+            arrivalTime: new FormControl('', { validators: [ Validators.required ]})
+        });
+    }
 }

@@ -1,22 +1,22 @@
 <div>
-    <form class="custom-form">
+    <form class="custom-form" [formGroup]="searchForm">
         <ul class="form-sections-list">
             <li class="form-section">
                 <div class="form-control-container">
                     <label class="control-name">From</label>
-                    <input class="form-control">
+                    <input class="form-control" formControlName="from">
                 </div>
                 <div class="form-control-container">
                     <label class="control-name">To</label>
-                    <input class="form-control">
+                    <input class="form-control" formControlName="to">
                 </div>
                 <div class="form-control-container">
                     <label class="control-name">Departure time</label>
-                    <input class="form-control">
+                    <input class="form-control" formControlName="departureTime">
                 </div>
                 <div class="form-control-container">
                     <label class="control-name">Arrival time</label>
-                    <input class="form-control">
+                    <input class="form-control" formControlName="arrivalTime">
                 </div>
                 <div class="search-button-container">
                     <button class="search-button">
