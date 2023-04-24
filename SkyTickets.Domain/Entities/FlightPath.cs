@@ -4,11 +4,12 @@
     {
         public AirportNode? Start { get; set; }
         public AirportNode? End { get; set; }
-        public List<Node>? Nodes { get; set; }
-        public List<FligtsRelationship>? Relationships { get; set; }
+        public List<AirportNode>? AirportNodes { get; set; }
+        public List<FlightNode>? FlightNodes { get; set; }
+        public List<FlightsRelationship>? Relationships { get; set; }
     }
 
-    public class FligtsRelationship
+    public class FlightsRelationship
     {
         public string? ElementId { get; set; }
         public string? StartNodeElementId { get; set; }

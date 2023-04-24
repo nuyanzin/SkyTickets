@@ -13,6 +13,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpService } from "./services/http.service";
 import { HttpClientModule } from "@angular/common/http";
 import { NgSelectModule } from "@ng-select/ng-select";
+import { MatAutocompleteModule, MAT_AUTOCOMPLETE_SCROLL_STRATEGY } from "@angular/material/autocomplete";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { Overlay, OverlayModule } from "@angular/cdk/overlay";
+import { ScrollingModule } from "@angular/cdk/scrolling";
+import { ClickOutsideDirective } from "./directives/click-outside.directive";
+import { GraphService } from "./services/graph.service";
 
 @NgModule({
   	declarations: [
@@ -20,7 +26,8 @@ import { NgSelectModule } from "@ng-select/ng-select";
         HeaderComponent,
 		BaseComponent,
 		MainPageComponent,
-		SearchFlightsComponent
+		SearchFlightsComponent,
+		ClickOutsideDirective,
   	],
   	imports: [
         BrowserModule,
@@ -29,12 +36,22 @@ import { NgSelectModule } from "@ng-select/ng-select";
         ReactiveFormsModule,
         HttpClientModule,
         NgSelectModule,
-        FormsModule
+        FormsModule,
+		MatAutocompleteModule,
+		MatFormFieldModule,
+		ScrollingModule,
+		OverlayModule
   	],
   	providers: [
         AppConfig,
         HttpService,
-        AirportsService
+        AirportsService,
+		GraphService,
+		{
+            provide: MAT_AUTOCOMPLETE_SCROLL_STRATEGY,
+            useFactory: (overlay: Overlay) => () => overlay.scrollStrategies.close(),
+            deps: [Overlay]
+        },
     ],
   	bootstrap: [AppComponent]
 })

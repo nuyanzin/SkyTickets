@@ -15,7 +15,7 @@ namespace SkyTickets.WebApi.Controllers
             _graphService = graphService;
         }
 
-        [HttpGet, Route("paths-between-airports")]
+        [HttpPost, Route("paths-between-airports")]
         public Task<List<FlightPath>> GetPathsBetweenAirports([FromBody] SimplePathQuery pathQuery)
         {
             return _graphService.GetPathsBetweenAirports(pathQuery);

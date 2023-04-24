@@ -13,6 +13,7 @@ namespace SkyTickets.Mapping.Airports
         public AirportModel Map(Airport entity)
             => entity == null ? throw new NullReferenceException() : new AirportModel()
             {
+                Id = entity.Id,
                 AirportId = entity.AirportId,
                 Name = entity.Name,
                 City = entity.City,

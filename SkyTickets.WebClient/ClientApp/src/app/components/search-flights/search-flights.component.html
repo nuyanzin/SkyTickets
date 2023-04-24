@@ -2,32 +2,122 @@
     <form class="custom-form" [formGroup]="searchForm">
         <ul class="form-sections-list">
             <li class="form-section">
-                <div class="form-control-container">
+                <div class="form-control-container" style="width: 240px;">
                     <label class="control-name">From</label>
-                    <ng-select 
-                        [items]="foundAirports"
-                        formControlName="from"
-                        bindLabel="name">
-                    </ng-select>
+                    <input 
+                        class="form-control" 
+                        formControlName="from">
+                    <ul 
+                        [class.d-none]="!(fromFoundAirports.length > 0 && fromControl.value)" 
+                        class="dropdown"
+                        appClickOutside
+                        (clickOutside)="closeFromDropdown()"
+                        [ignoreElementSelectors]="['.form-control']">
+                        <li *ngFor="let item of fromFoundAirports"
+                            class="dropdown-item"
+                            (click)="changeFromControl(item.id)">
+                            <div class="item-general-info-container">
+                                <span class="name">{{ item.name }}</span>
+                                <span class="code">{{ item.iata }}</span>
+                            </div>
+                            <span class="item-info">{{ item.country }}, {{ item.city }}</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="form-control-container">
+                <div class="form-control-container" style="width: 240px;">
                     <label class="control-name">To</label>
-                    <input class="form-control">
+                    <input class="form-control" formControlName="to">
+                    <ul 
+                        [class.d-none]="!(toFoundAirports.length > 0 && toControl.value)" 
+                        class="dropdown"
+                        appClickOutside
+                        (clickOutside)="closeToDropdown()"
+                        [ignoreElementSelectors]="['.form-control']">
+                        <li *ngFor="let item of toFoundAirports"
+                            class="dropdown-item"
+                            (click)="changeToControl(item.id)">
+                            <div class="item-general-info-container">
+                                <span class="name">{{ item.name }}</span>
+                                <span class="code">{{ item.iata }}</span>
+                            </div>
+                            <span class="item-info">{{ item.country }}, {{ item.city }}</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="form-control-container">
+                <div class="form-control-container" style="width: 160px;">
                     <label class="control-name">Departure time</label>
-                    <input class="form-control">
+                    <input class="form-control" formControlName="departureTime" type="date">
                 </div>
-                <div class="form-control-container">
+                <div class="form-control-container" style="width: 160px;">
                     <label class="control-name">Arrival time</label>
-                    <input class="form-control">
+                    <input class="form-control" formControlName="arrivalTime" type="date">
                 </div>
                 <div class="search-button-container">
-                    <button class="search-button">
+                    <button class="search-button" (click)="submit()">
                         Search
                     </button>
                 </div>
             </li>
         </ul>
     </form>
+</div>
+<div>
+    <div class="flight-path-container" *ngFor="let flight of flightPaths; let j = index">
+        <div class="begin-end-point-info-container">
+            <span>{{ getPointInfoTime(flight.relationships[0].date) }}</span>
+            <div class="sub-info">
+                <span>{{ flight.start.city }}</span>
+                <span>{{ getPointInfoDay(flight.relationships[0].date) }}, {{ getPointInfoMonth(flight.relationships[0].date) }}</span>
+            </div>
+        </div>
+        <div class="airport-container">
+            <div class="point" id="with-tooltip">
+                <div class="custom-tooltip">
+                    {{ flight.airportNodes[0].name }}
+                </div>
+            </div>
+            {{ flight.airportNodes[0].iata }}
+        </div>
+
+        <div class="flight-container">
+            <div class="flight" id="with-tooltip">
+                <div class="custom-tooltip">
+                    {{ getFlightTooltip(j, 0) }}
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngFor="let airport of flight.airportNodes; let i = index">
+            <ng-container *ngIf="i > 0 && i < flight.airportNodes.length - 1">
+                <div class="airport-container">
+                    <div class="point" id="with-tooltip">
+                        <div class="custom-tooltip">
+                            {{ airport.name }}
+                        </div>
+                    </div>
+                    {{ airport.iata }}
+                </div>
+        
+                <div class="flight-container">
+                    <div class="flight" id="with-tooltip">
+                        <div class="custom-tooltip">
+                            {{ getFlightTooltip(j, i) }}
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <div class="airport-container">
+            <div class="point" id="with-tooltip">
+                <div class="custom-tooltip">
+                    {{ flight.airportNodes[flight.airportNodes.length - 1].name }}
+                </div>
+            </div>
+            {{ flight.airportNodes[flight.airportNodes.length - 1].iata }}
+        </div>
+        <div class="begin-end-point-info-container">
+
+        </div>
+    </div>
 </div>

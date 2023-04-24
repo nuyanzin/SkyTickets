@@ -1,0 +1,19 @@
+#with-tooltip {
+    position: relative;
+}
+
+#with-tooltip .custom-tooltip {
+    display: none;
+    position: absolute;
+    left: 0; 
+    bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+    padding: 2px 4px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+#with-tooltip:hover .custom-tooltip {
+    display: block;
+}

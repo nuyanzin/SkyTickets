@@ -50,7 +50,7 @@ namespace SkyTickets.Data.Repositories
                 $"-[*1..4]-" +
                 $"(dest:Airport{{{arrivalAirportIdentifier.Key}: '{arrivalAirportIdentifier.Value}'}})) " +
                 $"WHERE ALL (i in range(0, size(relationships(p))-2) WHERE (relationships(p)[i]).date < (relationships(p)[i+1]).date) " +
-                $"AND (relationships(p)[0]).date > '{pathQuery.Flight.DepartureDateTime}' AND (relationships(p)[0]).date < '{pathQuery.Flight.ArrivalDateTime}' " +
+                $"AND (relationships(p)[0]).date > '{pathQuery.Flight.DepartureDateTime.ToString("yyyy-MM-dd hh:mm:ss")}' AND (relationships(p)[0]).date < '{pathQuery.Flight.ArrivalDateTime.ToString("yyyy-MM-dd hh:mm:ss")}' " +
                 $"RETURN p";
             return query;
         }

@@ -12,7 +12,20 @@ export class HttpService {
 
     public get<T>(url: string): Observable<any> {
         url = `${this.appConfig.skyTicketsApiUrl}/${url}`
-        return this.http.get<T>(url, this.getHttpRequestOptions()).pipe(map(response => this.handleResponce(response as HttpResponse<T>)));
+        return this.http.get<T>(url, this.getHttpRequestOptions())
+            .pipe(map(response => this.handleResponce(response as HttpResponse<T>)));
+    }
+
+    public post<T>(url: string, data: any): Observable<any> {
+        url = `${this.appConfig.skyTicketsApiUrl}/${url}`
+        let sendData = null;
+        if (data instanceof FormData) {
+            sendData = data;
+        } else {
+            sendData = JSON.stringify(data);
+        }
+        return this.http.post<T>(url, sendData, this.getHttpRequestOptions())
+            .pipe(map(response => this.handleResponce(response as HttpResponse<T>)));
     }
 
     private getHttpRequestOptions(): any {

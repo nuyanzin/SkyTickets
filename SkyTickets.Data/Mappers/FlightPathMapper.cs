@@ -17,23 +17,10 @@ namespace SkyTickets.Data.Mappers
             {
                 Start = MapAirportNode(path.As<IPath>().Start),
                 End = MapAirportNode(path.As<IPath>().End),
-                Nodes = path.As<IPath>().Nodes.Select(MapNode).ToList(),
+                AirportNodes = path.As<IPath>().Nodes.Where(node => node.Labels[0] == "Airport").Select(MapAirportNode).ToList(),
+                FlightNodes = path.As<IPath>().Nodes.Where(node => node.Labels[0] == "Flight").Select(MapFlightNode).ToList(),
                 Relationships = path.As<IPath>().Relationships.Select(MapRelationship).ToList()
             };
-        }
-
-        public static Node MapNode(INode node)
-        {
-            var label = node.Labels[0];
-            switch(label)
-            {
-                case "Airport":
-                    return MapAirportNode(node);
-                case "Flight":
-                    return MapFlightNode(node);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(node));
-            }
         }
 
         public static AirportNode MapAirportNode(INode node)
@@ -57,9 +44,9 @@ namespace SkyTickets.Data.Mappers
             };
         }
 
-        public static FligtsRelationship MapRelationship(IRelationship relationship)
+        public static FlightsRelationship MapRelationship(IRelationship relationship)
         {
-            return new FligtsRelationship()
+            return new FlightsRelationship()
             {
                 ElementId = relationship.ElementId,
                 StartNodeElementId = relationship.StartNodeElementId,

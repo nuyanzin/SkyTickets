@@ -36,7 +36,7 @@
 .custom-form
 .search-button-container
 .search-button {
-    margin-top: 24px;
+    margin-top: 20px;
     width: 120px;
     background-color: #34b0d9;
     height: 40px;
@@ -44,4 +44,51 @@
     justify-content: center;
     display: flex;
     align-items: center;
+}
+
+.flight-path-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 16px;
+    margin: 10px 0;
+    max-height: 160px;
+    min-height: 160px
+}
+
+.flight-path-container
+.airport-container {
+    margin: 0 10px;
+}
+
+.flight-path-container
+.airport-container 
+.point {
+    max-width: 40px;
+    min-width: 40px;
+    max-height: 8px;
+    min-height: 8px;
+    border-radius: 4px;
+    background-color: #a5b2c9;
+}
+
+.flight-path-container
+.flight-container
+.flight {
+    background-color: #dae0ed;
+    width: 200px;
+    height: 4px;
+}
+
+.begin-end-point-info-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.begin-end-point-info-container
+.sub-info {
+    display: flex;
+    flex-direction: column;
 }
