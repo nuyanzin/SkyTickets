@@ -61,13 +61,13 @@ export class SearchFlightsComponent {
 
     public submit() {
         //remove ! after tests
-        if (!this.searchForm?.valid) {
+        if (this.searchForm?.valid) {
             let query: SimplePathQuery = {
                 flight: {
-                    departureAirportEntityId: "29530ad7-d59e-4699-ace5-0a2978b16bcc",
-                    arrivalAirportEntityId: "29530ad7-d59e-4699-ace5-0a2978b16bcc",
-                    departureDateTime: "2017-11-07", //this.searchForm?.get('departureTime')?.value,
-                    arrivalDateTime: "2017-11-08", //this.searchForm?.get('arrivalTime')?.value,
+                    departureAirportEntityId: this.fromAirportId,
+                    arrivalAirportEntityId: this.toAirportId,
+                    departureDateTime: this.searchForm?.get('departureTime')?.value,
+                    arrivalDateTime: this.searchForm?.get('arrivalTime')?.value,
                 },
                 numberOfTransfers: 1
             };
@@ -107,8 +107,27 @@ export class SearchFlightsComponent {
         const beginOfFlightTime = this.flightPaths[flightPathIndex].relationships[airportIndex].date;
 
         const timeBetween = new Date(endOfFlightTime).getTime() - new Date(beginOfFlightTime).getTime();
-        const a = new Date(timeBetween);
-        return `In flight ${a.getHours()} h, ${a.getMinutes()} m`;
+        return `In flight ${this.convertMsToTime(timeBetween)}`;
+    }
+
+    public getStartPointInfo(flightIndex: number): string {
+        const dateString = this.flightPaths[flightIndex].relationships[0].date;
+        return `Departure at ${this.getPointInfoTime(dateString)},`;
+    }
+
+    public getMiddlePointInfo(flightIndex: number, relationshipIndex: number): string {
+        const endOfFlightTime = this.flightPaths[flightIndex].relationships[relationshipIndex + 1].date;
+        const beginOfFlightTime = this.flightPaths[flightIndex].relationships[relationshipIndex].date;
+
+        const timeBetween = new Date(endOfFlightTime).getTime() - new Date(beginOfFlightTime).getTime();
+        return `${this.convertMsToTime(timeBetween)} transfer`
+    }
+
+    public getEndPointInfo(flightIndex: number): string {
+        const dateString = this.flightPaths[flightIndex]
+            .relationships[this.flightPaths[flightIndex].relationships.length - 1].date;
+        const airportName = this.flightPaths[flightIndex].end?.name;
+        return `Arrival at ${this.getPointInfoTime(dateString)},`;
     }
 
     public getPointInfoTime(dateString: string): string {
@@ -119,7 +138,7 @@ export class SearchFlightsComponent {
 
     public getPointInfoDay(dateString: string): string {
         const date = new Date(dateString);
-        return `${date.getDay()}`;
+        return `${date.getDate()}`;
     }
 
     public getPointInfoMonth(dateString: string): string {
@@ -144,5 +163,20 @@ export class SearchFlightsComponent {
             case 12: return 'December';
             default: return '';
         }
-    } 
+    }
+
+    private convertMsToTime(milliseconds: number): string {
+        let seconds = Math.floor(milliseconds / 1000);
+        let minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+      
+        seconds = seconds % 60;
+        minutes = minutes % 60;
+      
+        return `${hours} hours, ${minutes} minutes`;
+    }
+
+    private padTo2Digits(num: number) {
+        return num.toString().padStart(2, '0');
+    }
 }

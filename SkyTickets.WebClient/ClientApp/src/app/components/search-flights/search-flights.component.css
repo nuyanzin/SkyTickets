@@ -1,3 +1,9 @@
+.main-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .custom-form {
     display: flex;
     flex-direction: row;
@@ -21,6 +27,16 @@
 .form-sections-list
 .form-section
 .form-control-container
+.control-name {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.custom-form
+.form-sections-list
+.form-section
+.form-control-container
 .form-control {
     height: 40px;
     border-radius: 8px;
@@ -38,32 +54,49 @@
 .search-button {
     margin-top: 20px;
     width: 120px;
-    background-color: #34b0d9;
+    background-color: #e35a0b;
     height: 40px;
     border-radius: 8px;
     justify-content: center;
     display: flex;
     align-items: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.flights-container {
+    max-width: 800px;
+    min-width: 800px;
 }
 
 .flight-path-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     background-color: #fff;
     border-radius: 16px;
     margin: 10px 0;
     max-height: 160px;
-    min-height: 160px
+    min-height: 160px;
+    padding: 0 20px;
 }
 
 .flight-path-container
+.flight-path-main-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flight-path-container
+.flight-path-main-container
 .airport-container {
     margin: 0 10px;
 }
 
 .flight-path-container
+.flight-path-main-container
 .airport-container 
 .point {
     max-width: 40px;
@@ -75,6 +108,13 @@
 }
 
 .flight-path-container
+.flight-path-main-container
+.flight-container {
+    margin-top: 2px;
+}
+
+.flight-path-container
+.flight-path-main-container
 .flight-container
 .flight {
     background-color: #dae0ed;
@@ -88,7 +128,22 @@
 }
 
 .begin-end-point-info-container
+.time {
+    font-size: 30px;
+}
+
+.begin-end-point-info-container
 .sub-info {
+    margin-top: 16px;
     display: flex;
     flex-direction: column;
+}
+
+.main-text {
+    color: #fff;
+    font-size: 60px;
+    margin: 300px;
+    width: 100%;
+    font-weight: 600;
+    padding: 30px;
 }

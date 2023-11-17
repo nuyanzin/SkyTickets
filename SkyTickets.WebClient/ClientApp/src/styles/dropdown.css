@@ -4,6 +4,10 @@
     padding: 8px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 24px 0;
+    z-index: 10;
+    position: absolute;
+    width: 240px;
 }
 
 .dropdown
